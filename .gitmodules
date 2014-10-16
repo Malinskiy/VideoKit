@@ -1,0 +1,18 @@
+[submodule "videokit/src/main/ffmpeg/ffmpeg"]
+	path = videokit/src/main/ffmpeg/ffmpeg
+	url = https://github.com/Malinskiy/ffmpeg.git
+[submodule "videokit/src/main/ffmpeg/fdk-aac"]
+	path = videokit/src/main/ffmpeg/fdk-aac
+	url = https://github.com/mstorsjo/fdk-aac.git
+[submodule "videokit/src/main/ffmpeg/libyuv"]
+	path = videokit/src/main/ffmpeg/libyuv
+	url = https://github.com/lemenkov/libyuv.git
+[submodule "videokit/src/main/ffmpeg/unyaffs"]
+	path = videokit/src/main/ffmpeg/unyaffs
+	url = https://github.com/ehlers/unyaffs
+[submodule "videokit/src/main/ffmpeg/vo-aacenc"]
+	path = videokit/src/main/ffmpeg/vo-aacenc
+	url = git://opencore-amr.git.sourceforge.net/gitroot/opencore-amr/vo-aacenc
+[submodule "videokit/src/main/ffmpeg/x264"]
+	path = videokit/src/main/ffmpeg/x264
+	url = git://git.videolan.org/x264.git
