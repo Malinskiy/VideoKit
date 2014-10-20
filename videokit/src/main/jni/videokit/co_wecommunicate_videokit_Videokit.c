@@ -1,8 +1,8 @@
 
 
 #include <android/log.h>
-#include "logjam.h"
-#include "uk_co_halfninja_videokit_Videokit.h"
+#include "log.h"
+#include "co_wecommunicate_videokit_Videokit.h"
 
 #include <stdlib.h>
 #include <stdbool.h>
@@ -20,7 +20,7 @@ int split (const char *str, char c, char ***arr)
     int count = 1;
     int token_len = 1;
     int i = 0;
-    char *p;
+    const char *p;
     char *t;
 
     p = str;
@@ -77,7 +77,7 @@ int split (const char *str, char c, char ***arr)
     return count;
 }
 
-JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_run(JNIEnv *env, jobject obj, jstring argstring)
+JNIEXPORT void JNICALL Java_co_wecommunicate_videokit_Videokit_run(JNIEnv *env, jobject obj, jstring argstring)
 {
 	int i = 0;
 	int argc = 0;
@@ -122,7 +122,7 @@ JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_run(JNIEnv *env, j
 	*/
 }
 
-JNIEXPORT void JNICALL Java_uk_co_halfninja_videokit_Videokit_stop(JNIEnv *env, jobject obj)
+JNIEXPORT void JNICALL Java_co_wecommunicate_videokit_Videokit_stop(JNIEnv *env, jobject obj)
 {
 	received_sigterm++;
 }

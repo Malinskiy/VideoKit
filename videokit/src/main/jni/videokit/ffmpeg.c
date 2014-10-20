@@ -22,7 +22,8 @@
  * @file
  * multimedia converter based on the FFmpeg libraries
  */
-#include "logjam.h"
+#include "log.h"
+#include "stdout.h"
 #include "config.h"
 #include <ctype.h>
 #include <string.h>
@@ -3617,6 +3618,7 @@ int main(int argc, char **argv)
         avfilter_register_all();
         av_register_all();
         avformat_network_init();
+        av_log_set_callback(ffmpeg_log_callback);
 
         show_banner(argc, argv, options);
 

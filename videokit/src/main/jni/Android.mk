@@ -1,7 +1,5 @@
 LOCAL_PATH := $(call my-dir)
 
-$(warning $(LOCAL_PATH))
-
 include $(CLEAR_VARS)
 LOCAL_MODULE := avformat
 LOCAL_SRC_FILES := ffmpeg/$(TARGET_ARCH_ABI)/lib/libavformat.a
@@ -75,7 +73,7 @@ FFMPEG_LIBS := $(addprefix ffmpeg/, \
 LOCAL_CFLAGS += -g -Iffmpeg -Ivideokit -Wno-deprecated-declarations 
 LOCAL_LDLIBS += -llog -lz
 LOCAL_STATIC_LIBRARIES := avformat avresample avfilter avcodec swscale avutil swresample postproc vo-aac fdk-aac x264
-LOCAL_SRC_FILES :=  videokit/cmdutils.c videokit/ffmpeg.c videokit/ffmpeg_opt.c videokit/ffmpeg_filter.c videokit/uk_co_halfninja_videokit_Videokit.c
+LOCAL_SRC_FILES :=  videokit/cmdutils.c videokit/stdout.c videokit/log.c videokit/ffmpeg.c videokit/ffmpeg_opt.c videokit/ffmpeg_filter.c videokit/co_wecommunicate_videokit_Videokit.c
 LOCAL_C_INCLUDES += $(LOCAL_PATH)/ffmpeg/$(TARGET_ARCH_ABI)/include
 include $(BUILD_SHARED_LIBRARY)
 

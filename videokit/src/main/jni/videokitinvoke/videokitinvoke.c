@@ -2,7 +2,7 @@
 #include <dlfcn.h>
 #include "videokitinvoke.h"
 
-#include "../videokit/logjam.h"
+#include "../videokit/log.h"
 
 static void* handle;
 
