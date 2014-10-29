@@ -3,7 +3,7 @@ package co.wecommunicate.videokit;
 import java.security.InvalidParameterException;
 
 public interface OutputListener {
-    void onString(int level, char[] line);
+    void onString(int level, String line);
 
     public static enum LEVEL {
         QUIET(-1),

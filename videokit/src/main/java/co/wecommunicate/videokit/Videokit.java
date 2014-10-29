@@ -1,5 +1,6 @@
 package co.wecommunicate.videokit;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,11 +25,11 @@ public final class Videokit {
 
     public native void register();
 
-    public native void run(String[] args);
+    public native void run(String args);
 
-    public void onLine(int level, char[] value) {
+    public void onLine(int level, byte[] value) {
         for (int i = 0; i < listeners.size(); i++) {
-            listeners.get(i).onString(level, value);
+            listeners.get(i).onString(level, new String(value, Charset.forName("UTF-8")));
         }
     }
 }

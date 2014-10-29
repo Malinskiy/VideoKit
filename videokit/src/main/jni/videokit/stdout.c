@@ -24,6 +24,8 @@ JNIEXPORT jboolean JNICALL Java_co_wecommunicate_videokit_Videokit_register(JNIE
     // (local will die after this method call)
 	g_obj = (*env)->NewGlobalRef(env, obj);
 
+	(*env)->GetJavaVM(env, &g_vm);
+
 	// save refs for callback
 	jclass g_clazz = (*env)->GetObjectClass(env, g_obj);
 	if (g_clazz == NULL) {
@@ -31,7 +33,7 @@ JNIEXPORT jboolean JNICALL Java_co_wecommunicate_videokit_Videokit_register(JNIE
 		return JNI_FALSE;
 	}
 
-	g_mid = (*env)->GetMethodID(env, g_clazz, "callback", "(I)V");
+	g_mid = (*env)->GetMethodID(env, g_clazz, "onLine", "(I[B)V");
 	if (g_mid == NULL) {
 		LOGE("Unable to get method ref");
 		return JNI_FALSE;
@@ -44,24 +46,35 @@ void callback(int level, const char* value) {
 	JNIEnv * g_env;
 	// double check it's all ok
 	int getEnvStat = (*g_vm)->GetEnv(g_vm, (void **)&g_env, JNI_VERSION_1_6);
+	int attached = 0;
 	if (getEnvStat == JNI_EDETACHED) {
 		LOGE("GetEnv: not attached");
 		if ((*g_vm)->AttachCurrentThread(g_vm, &g_env, NULL) != 0) {
 			LOGE("Failed to attach");
 		}
+		attached = 1;
 	} else if (getEnvStat == JNI_OK) {
 		//
 	} else if (getEnvStat == JNI_EVERSION) {
 		LOGE("GetEnv: version not supported");
 	}
 
-	(*g_env)->CallVoidMethod(g_env, g_obj, g_mid, level, value);
+    const int byteCount = strlen(value);
+    jbyte* pNativeMessage = (jbyte*)value;
+    jbyteArray bytes = (*g_env)->NewByteArray(g_env, byteCount);
+    (*g_env)->SetByteArrayRegion(g_env, bytes, 0, byteCount, pNativeMessage);
+
+	(*g_env)->CallVoidMethod(g_env, g_obj, g_mid, level, bytes);
+
+	(*g_env)->ReleaseByteArrayElements(g_env, bytes, pNativeMessage, JNI_ABORT);
+	(*g_env)->DeleteLocalRef(g_env, bytes);
 
 	if ((*g_env)->ExceptionCheck(g_env)) {
 		(*g_env)->ExceptionDescribe(g_env);
 	}
 
-	(*g_vm)->DetachCurrentThread(g_vm);
+	if(attached) (*g_vm)->DetachCurrentThread(g_vm);
+
 }
 
 #ifdef __cplusplus
