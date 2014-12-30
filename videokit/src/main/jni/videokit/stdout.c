@@ -48,7 +48,6 @@ void callback(int level, const char* value) {
 	int getEnvStat = (*g_vm)->GetEnv(g_vm, (void **)&g_env, JNI_VERSION_1_6);
 	int attached = 0;
 	if (getEnvStat == JNI_EDETACHED) {
-		LOGE("GetEnv: not attached");
 		if ((*g_vm)->AttachCurrentThread(g_vm, &g_env, NULL) != 0) {
 			LOGE("Failed to attach");
 		}
@@ -66,7 +65,6 @@ void callback(int level, const char* value) {
 
 	(*g_env)->CallVoidMethod(g_env, g_obj, g_mid, level, bytes);
 
-	(*g_env)->ReleaseByteArrayElements(g_env, bytes, pNativeMessage, JNI_ABORT);
 	(*g_env)->DeleteLocalRef(g_env, bytes);
 
 	if ((*g_env)->ExceptionCheck(g_env)) {
@@ -74,7 +72,6 @@ void callback(int level, const char* value) {
 	}
 
 	if(attached) (*g_vm)->DetachCurrentThread(g_vm);
-
 }
 
 #ifdef __cplusplus

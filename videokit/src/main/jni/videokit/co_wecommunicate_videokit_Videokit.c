@@ -86,7 +86,9 @@ JNIEXPORT void JNICALL Java_co_wecommunicate_videokit_Videokit_run(JNIEnv *env, 
 	const char *jstr;
 	jstr = (*env)->GetStringUTFChars(env, argstring, 0);
 
-	argc = split(jstr, '\n', &argv);
+	LOGE("%s", jstr);
+
+	argc = split(jstr, ' ', &argv);
 	main(argc, argv);
 
 	for(i=0;i<argc;i++)
@@ -95,31 +97,6 @@ JNIEXPORT void JNICALL Java_co_wecommunicate_videokit_Videokit_run(JNIEnv *env, 
 	}
 	free(argv);
 	(*env)->ReleaseStringUTFChars(env, argstring, jstr);
-
-	/*
-	jstring *strr = NULL;
-
-	if (args != NULL) {
-		argc = (*env)->GetArrayLength(env, args);
-		argv = (char **) malloc(sizeof(char *) * argc);
-		strr = (jstring *) malloc(sizeof(jstring) * argc);
-
-		for(i=0;i<argc;i++)
-		{
-			strr[i] = (jstring)(*env)->GetObjectArrayElement(env, args, i);
-			argv[i] = (char *)(*env)->GetStringUTFChars(env, strr[i], 0);
-		}
-	}	
-
-	main(argc, argv);
-	
-	for(i=0;i<argc;i++)
-	{
-		(*env)->ReleaseStringUTFChars(env, strr[i], argv[i]);
-	}
-	free(argv);
-	free(strr);
-	*/
 }
 
 JNIEXPORT void JNICALL Java_co_wecommunicate_videokit_Videokit_stop(JNIEnv *env, jobject obj)

@@ -186,41 +186,42 @@ EOF
 	    --extra-ldflags="$ADDITIONAL_LDFLAGS -Wl,-rpath-link=$PLATFORM/usr/lib -L$PLATFORM/usr/lib -lc -lm -ldl -llog -L$PREFIX/lib -L$ANDROID_LIBS -Wl,-rpath-link,$ANDROID_LIBS -L$ANDROID_STL_LIB" \
 	    --extra-cflags=" $ANDROID_INLCLUDES -I$PREFIX/include" \
 	    --disable-everything \
-	    --disable-libstagefright-h264 \
-	    --enable-libvo-aacenc \
+	    --disable-debug \
 	    --enable-libx264 \
 	    --enable-libfdk_aac \
-	    --enable-demuxer=mov \
 	    --enable-demuxer=rawvideo \
 	    --enable-demuxer=pcm_s16le \
-	    --enable-muxer=mp4 \
-	    --enable-muxer=rawvideo \
-	    --enable-muxer=hls \
+	    --enable-demuxer=hls \
+	    --enable-demuxer=mpegts \
 	    --enable-muxer=stream_segment \
 	    --enable-muxer=segment \
+	    --enable-muxer=image2 \
+	    --enable-muxer=mpegts \
 	    --enable-parser=h264 \
-	    --enable-decoder=aac \
+	    --enable-encoder=libx264 \
+	    --enable-encoder=libfdk_aac \
+	    --enable-encoder=mjpeg \
 	    --enable-decoder=h264 \
+	    --enable-decoder=aac \
 	    --enable-decoder=rawvideo \
 	    --enable-decoder=pcm_s16le \
-	    --disable-decoder=libstagefright_h264 \
-	    --enable-encoder=mpeg4 \
-	    --enable-encoder=libx264 \
-	    --enable-encoder=libvo_aacenc \
-	    --enable-encoder=libfdk_aac \
-	    --enable-filters \
+	    --disable-filters \
 	    --enable-filter=fps \
 	    --enable-filter=aresample \
+	    --enable-filter=thumbnail \
+	    --enable-filter=scale \
+	    --enable-filter=transpose \
+	    --enable-filter=vflip \
+	    --enable-filter=hflip \
 	    --enable-protocol=file \
 	    --enable-protocol=pipe \
 	    --enable-avformat \
 	    --enable-avcodec \
 	    --enable-avresample \
-	    --enable-zlib \
+	    --disable-zlib \
 	    --enable-bsf=aac_adtstoasc \
 	    --enable-bsf=chomp \
 	    --enable-bsf=h264_mp4toannexb \
-	    --enable-filter=fps \
 	    --disable-doc \
 	    --disable-ffplay \
 	    --enable-ffmpeg \
@@ -230,7 +231,7 @@ EOF
 	    --disable-avdevice \
 	    --disable-nonfree \
 	    --disable-network \
-	    --disable-stripping \
+	    --disable-postproc \
 	    --enable-gpl \
 	    --enable-nonfree \
 	    --enable-version3 \
@@ -246,7 +247,7 @@ EOF
 function build_one {
 	cd ffmpeg
 	PLATFORM=$NDK/platforms/$PLATFORM_VERSION/arch-$ARCH/
-	$PREBUILT/bin/$EABIARCH-ld -rpath-link=$PLATFORM/usr/lib -L$PLATFORM/usr/lib -L$PREFIX/lib  -L$ANDROID_LIBS -L$ANDROID_STL_LIB  -soname $SONAME -shared -nostdlib -z noexecstack -Bsymbolic --whole-archive --no-undefined -o $OUT_LIBRARY -lavcodec -lavfilter -lavformat -lavresample -lavutil -lpostproc -lswresample -lswscale -lx264 -lvo-aacenc -lfdk-aac -lc -lm -lz -ldl -llog $ANDROID_STAGEFRIGHT_ADDITIONAL_LIBS $CRT_BEGINOBJ  --dynamic-linker=/system/bin/linker -zmuldefs $ANDROID_LIB_GCC || exit 1
+	$PREBUILT/bin/$EABIARCH-ld -rpath-link=$PLATFORM/usr/lib -L$PLATFORM/usr/lib -L$PREFIX/lib  -L$ANDROID_LIBS -L$ANDROID_STL_LIB  -soname $SONAME -shared -nostdlib -z noexecstack -Bsymbolic --whole-archive --no-undefined -o $OUT_LIBRARY -lavcodec -lavfilter -lavformat -lavresample -lavutil -lswresample -lswscale -lx264 -lvo-aacenc -lfdk-aac -lc -lm -lz -ldl -llog $ANDROID_STAGEFRIGHT_ADDITIONAL_LIBS $CRT_BEGINOBJ  --dynamic-linker=/system/bin/linker -zmuldefs $ANDROID_LIB_GCC || exit 1
 	if [ -z "$DEBUG_FLAGS" ]; then
 	  $PREBUILT/bin/$EABIARCH-strip -s $OUT_LIBRARY
 	fi
