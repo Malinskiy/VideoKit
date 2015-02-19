@@ -231,7 +231,7 @@ EOF
 	    --disable-avdevice \
 	    --disable-nonfree \
 	    --disable-network \
-	    --disable-postproc \
+	    --enable-postproc \
 	    --enable-gpl \
 	    --enable-nonfree \
 	    --enable-version3 \
@@ -273,18 +273,19 @@ ANDROID_LIB_GCC="$PREBUILT/lib/gcc/$EABIARCH/$COMPILER_VERSION/libgcc.a"
 PLATFORM_VERSION=android-9
 }
 
-./fetch_android_deps.sh
+# Disabling native stagefright dependency for now
+#./fetch_android_deps.sh
 
-ANDROID_SOURCE=$(pwd)/android-source
-ANDROID_INCLUDES_BASE="-I$ANDROID_SOURCE/frameworks/base/include"
-ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/base/include/media/stagefright/openmax"
-ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/base/native/include"
-ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/native/include"
-ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/native/include/media/openmax"
-ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/av/include"
-ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/system/core/include"
-ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/hardware/libhardware/include"
-ANDROID_STAGEFRIGHT_ADDITIONAL_LIBS="-lstagefright -lmedia -lutils -lbinder -lgnustl_shared"
+#ANDROID_SOURCE=$(pwd)/android-source
+#ANDROID_INCLUDES_BASE="-I$ANDROID_SOURCE/frameworks/base/include"
+#ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/base/include/media/stagefright/openmax"
+#ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/base/native/include"
+#ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/native/include"
+#ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/native/include/media/openmax"
+#ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/frameworks/av/include"
+#ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/system/core/include"
+#ANDROID_INCLUDES_BASE="$ANDROID_INCLUDES_BASE -I$ANDROID_SOURCE/hardware/libhardware/include"
+#ANDROID_STAGEFRIGHT_ADDITIONAL_LIBS="-lstagefright -lmedia -lutils -lbinder -lgnustl_shared"
 
 #arm v5
 EABIARCH=arm-linux-androideabi
